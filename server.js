@@ -1,5 +1,8 @@
-var express = require('express');
-var app = express();
+const Express = require('express');
+
+const DbSetup = require('./src/database/setup.js');
+
+var app = Express();
 
 app.get('/', function (req, res) {
   	res.send('Hello World!');
