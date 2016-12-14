@@ -1,16 +1,17 @@
 {
   "name": "leek-wars-wiki",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A wiki for Leek Wars",
   "main": "server.js",
   "scripts": {
   	"start": "babel-node server.js --presets es2015,stage-2"
   },
   "dependencies": {
-    "body-parser": "~1.0.1",
-    "express": "~4.0.0",
-    "mongoose": "~3.6.13",
-    "joi": "~10.0.5"
+    "body-parser": "^1.0.1",
+    "express": "^4.0.0",
+    "mongoose": "^3.6.13",
+    "joi": "^10.0.5",
+    "winston": "^2.3.0 "
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
