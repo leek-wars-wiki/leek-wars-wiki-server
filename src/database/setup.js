@@ -8,21 +8,17 @@ db.on('error', console.error.bind(console, 'Connection error: '));
 
 
 
-var User = require('./schemas/users.js');
+var User = require('./models/users.js');
 
-db.once('open', () => {
-	console.log('Connected to db !');
 
-	let u = new User({
-	    email: 'test@test.test',
-	    userName: 'test',
-	    role: 'testor',
-	    status: 'new',
-	});
+let u = new User({
+	email: 'test@test.test',
+	userName: 'test',
+	role: 'testor',
+	status: 'new',
+});
 
-	u.save((err, result) => { 
-		if(err) return console.log(err);
-		console.log(result);
-	});
-
+u.save((err, result) => { 
+	if(err) return console.log(err);
+	console.log(result);
 });

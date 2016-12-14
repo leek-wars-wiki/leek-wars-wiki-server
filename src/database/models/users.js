@@ -1,4 +1,5 @@
 const Mongoose = require('mongoose');
+const Joi = require('joi');
 
 var usersSchema = Mongoose.Schema({
     email: String,
@@ -7,6 +8,4 @@ var usersSchema = Mongoose.Schema({
     status: String,
 });
 
-var User = Mongoose.model('Users', usersSchema);
-
-module.exports = User;
+module.exports = Mongoose.model('Users', usersSchema);
