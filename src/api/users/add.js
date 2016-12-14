@@ -1,14 +1,10 @@
 const Joi = require('joi');
 
-var addAPI = {
+module.exports.options = {
 	method: 'POST',
 	path: '/api/users/add'
 };
 
-function addHandler(request, response) {
-	response.send('hello world');
-}
-
-module.exports = function(router) {
-	router.addRoute(addAPI, addHandler);
+module.exports.handler = function(request, response) {
+	response.send('hello world!');
 };
