@@ -12,6 +12,9 @@ function Router() {
 	_router = Express.Router();
 };
 
+Router.prototype.addRoute = function(option, handler) {
+	console.log('Setup route ' + option.method + ' ' + option.path);
 
+};
 
 module.exports = Router;
