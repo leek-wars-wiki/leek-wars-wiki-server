@@ -2,12 +2,14 @@ const Fs = require('fs');
 const Path = require('path');
 const Express = require('express');
 
+const Log = require('../logger.js');
+
 const API_PATH = './src/api';
 
 var Router = Express.Router();
 
 function addRoute(api) {
-	console.log('Setup route ' + api.options.method + ' ' + api.options.path);
+	Log.verbose('New route : [' + api.options.method + '] ' + api.options.path);
 
 	switch(api.options.method) {
 		case 'GET':
@@ -34,4 +36,5 @@ Fs.readdirSync(API_PATH)
 			});
 	});
 
+Log.info('Routes creation : Completed');
 module.exports = Router;
