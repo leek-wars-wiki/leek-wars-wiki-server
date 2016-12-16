@@ -1,5 +1,6 @@
 const Express = require('express');
 const Log = require('./src/logger.js');
+const Config = require('./src/config.js');
 
 var app = Express();
 

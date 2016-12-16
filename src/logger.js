@@ -8,7 +8,8 @@ var logger = new Winston.Logger({
 	    	level: 'debug',
 	    	colorize: true,
 	    	timestamp: true,
-	    	showLevel: true
+	    	showLevel: true,
+	    	prettyPrint: true
 	    }),
 	    new (Winston.transports.File)({
       		name: 'error-file',

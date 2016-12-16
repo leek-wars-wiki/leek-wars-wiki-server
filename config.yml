@@ -1,0 +1,6 @@
+# Roles
+roles:
+  member: 'member'
+  author: 'author'
+  moderator: 'moderator'
+  admin: 'admin'
