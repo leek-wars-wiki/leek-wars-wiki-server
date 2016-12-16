@@ -11,7 +11,8 @@
     "express": "^4.0.0",
     "mongoose": "^3.6.13",
     "joi": "^10.0.5",
-    "winston": "^2.3.0 "
+    "winston": "^2.3.0",
+    "boom": "4.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
