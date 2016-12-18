@@ -7,11 +7,10 @@
 		"start": "babel-node server.js --presets es2015,stage-2"
 	},
 	"dependencies": {
-		"body-parser": "^1.0.1",
-		"express": "^4.0.0",
 		"mongoose": "^3.6.13",
-		"joi": "^10.0.5",
 		"winston": "^2.3.0",
+		"hapi": "^16.0.1",
+		"joi": "^10.0.5",
 		"boom": "4.2.0",
 		"js-yaml": "3.7.0"
 	},

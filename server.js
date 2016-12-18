@@ -1,11 +1,22 @@
-const Express = require('express');
+const Hapi = require('hapi');
+
 const Log = require('./src/logger.js');
 const Config = require('./src/config.js');
+const Routes = require('./src/api/routes.js');
 
-var app = Express();
+var server = new Hapi.Server();
 
-app.use(require('./src/api/routes.js'));
+server.connection({
+	host: 'localhost',
+	port: 8000
+});
 
-app.listen(8888, function() {
-  	Log.info('Server listening on port 8888');
+server = Routes(server);
+
+server.start(err => {
+
+    if (err) {
+        throw err;
+    }
+    Log.info('Server listening on port 8000');
 });
