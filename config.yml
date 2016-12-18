@@ -1,6 +1,14 @@
 # Roles
 roles:
+  guest: 'guest'
   member: 'member'
   author: 'author'
   moderator: 'moderator'
   admin: 'admin'
+
+rolesLevel:
+  guest: 0
+  member: 1
+  author: 2
+  moderator: 3
+  admin: 4

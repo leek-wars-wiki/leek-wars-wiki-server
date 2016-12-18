@@ -21,7 +21,6 @@ function addRoute(api) {
 	};
 };
 
-
 Fs.readdirSync(API_PATH)
 	.filter(file => {
 		return Fs.statSync(Path.join(API_PATH, file)).isDirectory();

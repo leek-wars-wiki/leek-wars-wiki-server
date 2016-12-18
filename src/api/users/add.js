@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const Config = require('../../config.js');
 
 module.exports.options = {
 	method: 'POST',
