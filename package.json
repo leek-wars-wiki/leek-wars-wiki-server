@@ -11,8 +11,8 @@
 		"winston": "^2.3.0",
 		"hapi": "^16.0.1",
 		"joi": "^10.0.5",
-		"boom": "4.2.0",
-		"js-yaml": "3.7.0"
+		"boom": "^4.2.0",
+		"js-yaml": "^3.7.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.18.0",

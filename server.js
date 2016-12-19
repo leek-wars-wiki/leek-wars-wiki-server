@@ -14,9 +14,8 @@ server.connection({
 server = Routes(server);
 
 server.start(err => {
-
-    if (err) {
-        throw err;
-    }
+    if (err)
+    	throw err;
+    
     Log.info('Server listening on port 8000');
 });
