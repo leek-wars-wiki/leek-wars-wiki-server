@@ -3,7 +3,8 @@ const Joi = require('joi');
 
 var usersSchema = Mongoose.Schema({
     email: String,
-    userName: String,
+    nickname: String,
+    password: String,
     role: String,
     status: String,
 });
