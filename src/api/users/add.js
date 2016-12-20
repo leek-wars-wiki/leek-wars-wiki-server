@@ -19,20 +19,15 @@ var addPayloadSchema = {
 };
 
 function addHandler(request, reply) {
-	Log.debug(request.payload);
-
 	let user = new Users(request.payload);
 
 	user.save((err, result) => { 
 		if(err) {
 			Log.error('Add user error:', err);
 		}
-		else {
-			Log.debug(result);
-		}
 	});
 
-	reply('ok');
+	reply(request.payload).code(201);
 }
 
 module.exports = {

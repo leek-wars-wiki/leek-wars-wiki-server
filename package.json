@@ -12,7 +12,8 @@
 		"hapi": "^16.0.1",
 		"joi": "^10.0.5",
 		"boom": "^4.2.0",
-		"js-yaml": "^3.7.0"
+		"js-yaml": "^3.7.0",
+		"bcrypt": "^1.0.1"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.18.0",
