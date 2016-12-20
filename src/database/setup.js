@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 
-const Log = require('../logger.js');
+const Log = require('src/logger.js');
 
 Mongoose.connect('mongodb://localhost/wikidb');
 var db = Mongoose.connection;

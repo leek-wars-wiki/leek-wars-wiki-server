@@ -4,7 +4,7 @@
 	"description": "A wiki for Leek Wars",
 	"main": "server.js",
 	"scripts": {
-		"start": "babel-node server.js --presets es2015,stage-2"
+		"start": "NODE_PATH=. babel-node server.js --presets es2015,stage-2"
 	},
 	"dependencies": {
 		"mongoose": "^3.6.13",

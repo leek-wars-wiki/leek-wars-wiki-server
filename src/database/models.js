@@ -1,7 +1,7 @@
 const Fs = require('fs');
 const Path = require('path');
 
-const MODELS_PATH = './src/database/models';
+const MODELS_PATH = 'src/database/models';
 
 var Models = {};
 

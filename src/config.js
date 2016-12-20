@@ -1,6 +1,6 @@
 const Fs = require('fs');
 const Yaml = require('js-yaml');
-const Log = require('./logger.js');
+const Log = require('src/logger.js');
 
 var config;
 

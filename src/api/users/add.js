@@ -1,9 +1,8 @@
 const Joi = require('joi');
-const Config = require('../../config.js');
 
-const Users = require('../../database/models.js').users;
-
-const Log = require('../../logger.js');
+const Config = require('src/config.js');
+const Log = require('src/logger.js');
+const Users = require('src/database/models.js').users;
 
 var addPayloadSchema = {
 	email: Joi.string()
