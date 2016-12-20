@@ -1,6 +1,8 @@
 const Joi = require('joi');
 const Config = require('../../config.js');
 
+const Users = require('../../database/models.js').users;
+
 const Log = require('../../logger.js');
 
 var addPayloadSchema = {
@@ -19,7 +21,19 @@ var addPayloadSchema = {
 
 function addHandler(request, reply) {
 	Log.debug(request.payload);
-	reply('hello world!');
+
+	let user = new Users(request.payload);
+
+	user.save((err, result) => { 
+		if(err) {
+			Log.error('Add user error:', err);
+		}
+		else {
+			Log.debug(result);
+		}
+	});
+
+	reply('ok');
 }
 
 module.exports = {
