@@ -13,3 +13,6 @@ rolesLevel:
   author: 2
   moderator: 3
   admin: 4
+
+# Bcrypt salt rounds
+saltRounds: 10

@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const Bcrypt = require('bcrypt');
 
 const Config = require('src/config.js');
 const Log = require('src/logger.js');
@@ -9,7 +10,7 @@ var addPayloadSchema = {
 		.email()
 		.description("Email of the user")
 		.required(),
-	nickname: Joi.string()
+	username: Joi.string()
 		.min(3).max(30)
 		.description("Nickame that will be displayed")
 		.required(),
@@ -21,13 +22,20 @@ var addPayloadSchema = {
 function addHandler(request, reply) {
 	let user = new Users(request.payload);
 
-	user.save((err, result) => { 
-		if(err) {
-			Log.error('Add user error:', err);
-		}
-	});
+	Bcrypt.hash(user.password, Config.saltRounds, (err, hash) => {
+		if(err) return reply(Boom.internal());
 
-	reply(request.payload).code(201);
+		user.password = hash;
+
+		user.save((err, result) => { 
+			if(err) {
+				Log.error('Add user error:', err);
+				return reply(Boom.internal());
+			}
+
+			reply(request.payload).code(201);
+		});
+	});
 }
 
 module.exports = {
