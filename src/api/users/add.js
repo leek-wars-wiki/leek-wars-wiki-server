@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const Bcrypt = require('bcrypt');
+const Boom = require('boom');
 
 const Config = require('src/config.js');
 const Log = require('src/logger.js');

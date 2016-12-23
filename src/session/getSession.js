@@ -1,5 +1,6 @@
+const Boom = require('boom');
 
-
+const Login = require('src/session/login.js');
 
 module.exports = function(request, reply) {
 	console.log('GET SESSION');
@@ -42,4 +43,6 @@ function basicAuth(request, authorization, reply) {
     if(!username) {
         return reply(Boom.unauthorized('HTTP authentication header missing username'));
     }
+
+    return Login(request, username, password, reply);
 }

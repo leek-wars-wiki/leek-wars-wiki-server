@@ -14,6 +14,25 @@ server.connection({
 	port: 8000
 });
 
+server.state( 'session', {
+	ttl: null,
+	path: '/'
+});
+
+server.ext( {
+    type: 'onPreAuth',
+    method: require('src/session/getSession')
+});
+
+server.route({
+    path: '/',
+    method: 'GET',
+    handler: ( req, reply ) => {
+        reply('Hello !');
+    }
+});
+
+
 server = Routes(server);
 
 server.start(err => {
