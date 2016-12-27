@@ -1,3 +1,5 @@
+"use strict";
+
 const Winston = require('winston');
 
 var logger = new Winston.Logger({

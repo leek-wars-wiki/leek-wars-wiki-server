@@ -1,3 +1,5 @@
+"use strict";
+
 const Fs = require('fs');
 const Yaml = require('js-yaml');
 const Log = require('src/logger.js');

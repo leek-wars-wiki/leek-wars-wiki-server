@@ -1,3 +1,5 @@
+"use strict";
+
 const Mongoose = require('mongoose');
 
 var sessionsSchema = Mongoose.Schema({

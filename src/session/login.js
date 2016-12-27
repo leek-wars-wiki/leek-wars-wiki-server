@@ -1,3 +1,5 @@
+"use strict";
+
 const Bcrypt = require('bcrypt');
 const Boom = require('boom');
 

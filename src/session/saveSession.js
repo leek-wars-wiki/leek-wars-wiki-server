@@ -1,5 +1,4 @@
-
-
+"use strict";
 
 module.exports = function(request, reply) {
 	console.log('SAVE SESSION');

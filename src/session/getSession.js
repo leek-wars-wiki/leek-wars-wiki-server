@@ -1,3 +1,5 @@
+"use strict";
+
 const Boom = require('boom');
 
 const Login = require('src/session/login.js');

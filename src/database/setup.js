@@ -1,3 +1,5 @@
+"use strict";
+
 const Mongoose = require('mongoose');
 
 const Log = require('src/logger.js');

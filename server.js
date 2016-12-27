@@ -1,3 +1,5 @@
+"use strict";
+
 const Hapi = require('hapi');
 
 const Log = require('./src/logger.js');

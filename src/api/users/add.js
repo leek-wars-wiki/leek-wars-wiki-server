@@ -1,3 +1,5 @@
+"use strict";
+
 const Joi = require('joi');
 const Bcrypt = require('bcrypt');
 const Boom = require('boom');
