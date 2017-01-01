@@ -2,9 +2,9 @@
 
 const Hapi = require('hapi');
 
-const Log = require('./src/logger.js');
-const Config = require('./src/config.js');
-const Routes = require('./src/api/routes.js');
+const Log = require('src/logger.js');
+const Config = require('src/config.js');
+const Routes = require('src/api/routes.js');
 
 // Setup DB
 require('./src/database/setup.js');

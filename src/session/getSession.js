@@ -2,6 +2,7 @@
 
 const Boom = require('boom');
 
+const Log = require('src/logger.js');
 const Login = require('src/session/login.js');
 
 module.exports = function(request, reply) {
@@ -10,41 +11,50 @@ module.exports = function(request, reply) {
 	console.log('request.state.session', request.state.session);
 	console.log('request.headers.authorization', request.headers.authorization);
 
-	let auth = request.headers.authorization;
+	let authHeader = request.headers.authorization;
 
-	if(auth) {
-		return basicAuth(request, auth, reply);
+	if(authHeader) {
+		basicAuth(authHeader)
+            .then(session => {
+                Log.debug(session);
+                return reply.continue();
+            })
+            .catch(err => {
+                return reply(err);
+            });
 	}
-
-	return reply.continue();
 };
 
+function basicAuth(authorization) {
+    return new Promise((fulfill, reject) => {
+        const parts = authorization.split(/\s+/);
 
-function basicAuth(request, authorization, reply) {
-	
-	const parts = authorization.split(/\s+/);
+        if (parts[0].toLowerCase() !== 'basic') {
+            reject(Boom.unauthorized("Not a basic authentification"));
+        }
 
-    if (parts[0].toLowerCase() !== 'basic') {
-        return reply(Boom.unauthorized());
-    }
+        if (parts.length !== 2) {
+            reject(Boom.badRequest("Bad HTTP authentication header format"));
+        }
 
-    if (parts.length !== 2) {
-        return reply(Boom.badRequest('Bad HTTP authentication header format'));
-    }
+        const credentialsPart = new Buffer(parts[1], 'base64').toString();
+        const sep = credentialsPart.indexOf(':');
 
-    const credentialsPart = new Buffer(parts[1], 'base64').toString();
-    const sep = credentialsPart.indexOf(':');
+        if (sep === -1) {
+            reject(Boom.badRequest('Bad header internal syntax'));
+        }
 
-    if (sep === -1) {
-        return reply(Boom.badRequest('Bad header internal syntax'));
-    }
+        const username = credentialsPart.slice(0, sep);
+        const password = credentialsPart.slice(sep + 1);
 
-    const username = credentialsPart.slice(0, sep);
-    const password = credentialsPart.slice(sep + 1);
+        if(!username) {
+            reject(Boom.unauthorized("HTTP authentication header missing username"));
+        }
 
-    if(!username) {
-        return reply(Boom.unauthorized('HTTP authentication header missing username'));
-    }
-
-    return Login(request, username, password, reply);
+        Login(username, password)
+            .then(session => {
+                fulfill(session);
+            })
+            .catch(reject);
+    });
 }
