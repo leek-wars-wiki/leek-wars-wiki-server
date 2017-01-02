@@ -2,6 +2,8 @@
 
 const Winston = require('winston');
 
+//const Config = require('src/config.js');
+
 var logger = new Winston.Logger({
     level: 'info',
     transports: [

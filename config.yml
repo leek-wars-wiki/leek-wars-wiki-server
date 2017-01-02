@@ -1,3 +1,7 @@
+# Logs level // error / warn / info / verbose / debug / silly
+logsLevel:
+  console: 'silly'
+
 # Roles
 roles:
   guest: 'guest'
