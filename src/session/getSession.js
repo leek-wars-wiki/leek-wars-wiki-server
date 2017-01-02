@@ -12,17 +12,33 @@ module.exports = function(request, reply) {
 	console.log('request.headers.authorization', request.headers.authorization);
 
 	let authHeader = request.headers.authorization;
+    let cookie = request.state.session;
 
 	if(authHeader) {
-		basicAuth(authHeader)
-            .then(session => {
-                Log.debug(session);
-                return reply.continue();
-            })
-            .catch(err => {
-                return reply(err);
-            });
+        // Basic authentification
+        if(authHeader.startsWith('Basic')) {
+            basicAuth(authHeader)
+                .then(session => {
+                    Log.debug(session);
+                    return reply.continue();
+                })
+                .catch(err => {
+                    return reply(err);
+                });
+
+        // Cookie authentification (Header)
+        } else if(authHeader.startsWith('Cookie')) {
+            cookie = authHeader.split(/\s+/)[1];
+        }
 	}
+
+    if(cookie) {
+        //@TODO
+        
+    } else {
+        request.session = {};
+        return reply.continue();
+    }
 };
 
 function basicAuth(authorization) {

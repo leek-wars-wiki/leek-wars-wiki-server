@@ -17,11 +17,12 @@ server.connection({
 });
 
 server.state( 'session', {
+    isSecure: process.env.WIKI_DEV_ENV ? false : true,
 	ttl: null,
-	path: '/'
+    encoding: 'base64json'
 });
 
-server.ext( {
+server.ext({
     type: 'onPreAuth',
     method: require('src/session/getSession')
 });
