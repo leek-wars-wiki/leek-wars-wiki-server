@@ -9,4 +9,7 @@ var sessionsSchema = Mongoose.Schema({
     keep: Boolean
 });
 
-module.exports = Mongoose.model('Sessions', sessionsSchema);
+module.exports = {
+	name: 'Sessions',
+	model: Mongoose.model('Sessions', sessionsSchema)
+};

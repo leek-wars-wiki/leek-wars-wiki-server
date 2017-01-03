@@ -5,7 +5,7 @@ const Boom = require('boom');
 const Config = require('src/config.js');
 const Log = require('src/logger.js');
 const Login = require('src/session/login.js');
-const Sessions = require('src/database/models.js').sessions;
+const Sessions = require('src/database/models.js').Sessions;
 
 module.exports = function(request, reply) {
 	Log.debug('GET SESSION');
@@ -95,39 +95,39 @@ function basicAuth(authorization) {
 function getSession(options) {
     return new Promise((fulfill, reject) => {
         if(options.newConnection) {
-            let session = new Sessions({
-                username: options.username,
-                role: options.role,
-                isAuth: true,
-                keep: false
-            });
-
-            session.save((err, result) => { 
-                if(err) {
-                    Log.error('Create session error:', err);
-                    reject(Boom.internal("Error while saving session"));
-                }
-
-                fulfill(result);
-            });
+            Sessions.save({
+                    username: options.username,
+                    role: options.role,
+                    isAuth: true,
+                    keep: false
+                })
+                .then(session => {
+                    fulfill(session);
+                })
+                .catch(err => {
+                    Log.error('Create session error :', err);
+                    reject(err);
+                });
 
         } else {
-            Sessions.findOne({'_id': options.token}, (err, session) => {
-                if(err) {
-                    Log.error('Create session error:', err);
-                    reject(Boom.internal("Error while searching session"));
-                }
-
-                if(!session) {
-                    fulfill({
-                        role: Config.roles.guest,
-                        isAuth: false,
-                        keep: false
-                    });
-                } else {
-                    fulfill(session);
-                }
-            });
+            Sessions.findOne({
+                    '_id': options.token
+                })
+                .then(session => {
+                    if(!session) {
+                        fulfill({
+                            role: Config.roles.guest,
+                            isAuth: false,
+                            keep: false
+                        });
+                    } else {
+                        fulfill(session);
+                    }
+                })
+                .catch(err => {
+                    Log.error('Create session error :', err);
+                    reject(err);
+                });
         }
     });
 }

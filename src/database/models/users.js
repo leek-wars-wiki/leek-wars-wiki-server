@@ -10,4 +10,7 @@ var usersSchema = Mongoose.Schema({
     status: String,
 });
 
-module.exports = Mongoose.model('Users', usersSchema);
+module.exports = {
+	name: 'Users',
+	model: Mongoose.model('Users', usersSchema)
+};
