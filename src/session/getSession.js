@@ -2,42 +2,57 @@
 
 const Boom = require('boom');
 
+const Config = require('src/config.js');
 const Log = require('src/logger.js');
 const Login = require('src/session/login.js');
+const Sessions = require('src/database/models.js').sessions;
 
 module.exports = function(request, reply) {
-	console.log('GET SESSION');
-	console.log('request.state', request.state);
-	console.log('request.state.session', request.state.session);
-	console.log('request.headers.authorization', request.headers.authorization);
+	Log.debug('GET SESSION');
+	Log.debug('request.state', request.state);
+	Log.debug('request.state.session', request.state.session);
+	Log.debug('request.headers.authorization', request.headers.authorization);
 
 	let authHeader = request.headers.authorization;
-    let cookie = request.state.session;
+    let token = request.state.session;
 
 	if(authHeader) {
         // Basic authentification
         if(authHeader.startsWith('Basic')) {
             basicAuth(authHeader)
-                .then(session => {
-                    Log.debug(session);
-                    return reply.continue();
+                .then(result => {
+                    getSession({
+                            newConnection: true,
+                            username: result.username,
+                            role: result.role
+                        })
+                        .then(session => { Log.debug('Session', session); })
+                        .catch(err => { Log.debug('Session error', err); });
+
+
+                    reply.continue();
                 })
                 .catch(err => {
-                    return reply(err);
+                    reply(err);
                 });
 
         // Cookie authentification (Header)
         } else if(authHeader.startsWith('Cookie')) {
-            cookie = authHeader.split(/\s+/)[1];
+            token = authHeader.split(/\s+/)[1];
         }
-	}
+	} else if(token) {
+        getSession({
+                newConnection: false,
+                token: token
+            })
+            .then(session => { Log.debug('Session', session); })
+            .catch(err => { Log.debug('Session error', err); });
 
-    if(cookie) {
-        //@TODO
+        reply.continue();
         
     } else {
         request.session = {};
-        return reply.continue();
+        reply.continue();
     }
 };
 
@@ -71,6 +86,48 @@ function basicAuth(authorization) {
             .then(session => {
                 fulfill(session);
             })
-            .catch(reject);
+            .catch(err => {
+                reject(err);
+            });
+    });
+}
+
+function getSession(options) {
+    return new Promise((fulfill, reject) => {
+        if(options.newConnection) {
+            let session = new Sessions({
+                username: options.username,
+                role: options.role,
+                isAuth: true,
+                keep: false
+            });
+
+            session.save((err, result) => { 
+                if(err) {
+                    Log.error('Create session error:', err);
+                    reject(Boom.internal("Error while saving session"));
+                }
+
+                fulfill(result);
+            });
+
+        } else {
+            Sessions.findOne({'_id': options.token}, (err, session) => {
+                if(err) {
+                    Log.error('Create session error:', err);
+                    reject(Boom.internal("Error while searching session"));
+                }
+
+                if(!session) {
+                    fulfill({
+                        role: Config.roles.guest,
+                        isAuth: false,
+                        keep: false
+                    });
+                } else {
+                    fulfill(session);
+                }
+            });
+        }
     });
 }

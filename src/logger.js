@@ -2,14 +2,14 @@
 
 const Winston = require('winston');
 
-//const Config = require('src/config.js');
+const Config = require('src/config.js');
 
 var logger = new Winston.Logger({
     level: 'info',
     transports: [
 	    new (Winston.transports.Console)({
 	    	name: 'debug-console',
-	    	level: 'debug',
+	    	level: Config.logsLevel.console,
 	    	colorize: true,
 	    	timestamp: true,
 	    	showLevel: true,
