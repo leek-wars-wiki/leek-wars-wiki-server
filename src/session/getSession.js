@@ -95,17 +95,25 @@ function basicAuth(authorization) {
 function getSession(options) {
     return new Promise((fulfill, reject) => {
         if(options.newConnection) {
-            Sessions.save({
-                    username: options.username,
-                    role: options.role,
-                    isAuth: true,
-                    keep: false
+            Sessions.remove({
+                    'username': options.username
                 })
-                .then(session => {
-                    fulfill(session);
+                .then(() => {
+                    Sessions.create({
+                            username: options.username,
+                            role: options.role,
+                            isAuth: true,
+                            keep: false
+                        })
+                        .then(session => {
+                            fulfill(session);
+                        })
+                        .catch(err => {
+                            Log.error('Create session error :', err);
+                            reject(err);
+                        });
                 })
                 .catch(err => {
-                    Log.error('Create session error :', err);
                     reject(err);
                 });
 

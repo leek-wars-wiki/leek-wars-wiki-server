@@ -2,6 +2,10 @@
 logsLevel:
   console: 'silly'
 
+# Mongoose
+mongoose:
+  connectionString: 'mongodb://localhost/wikidb'
+
 # Roles
 roles:
   guest: 'guest'
@@ -20,3 +24,23 @@ rolesLevel:
 
 # Bcrypt salt rounds
 saltRounds: 10
+
+# Winston logs level
+winston:
+  levels:
+    error: 0
+    warn: 1
+    info: 2
+    verbose: 3
+    debug: 4
+    data: 5
+    silly: 6
+  colors:
+    error: 'red'
+    warn: 'yellow'
+    info: 'green'
+    verbose: 'cyan'
+    debug: 'blue'
+    data: 'magenta'
+    silly: 'grey'
+

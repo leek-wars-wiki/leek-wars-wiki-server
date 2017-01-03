@@ -2,9 +2,11 @@
 
 const Mongoose = require('mongoose');
 
+const Config = require('src/config.js');
 const Log = require('src/logger.js');
 
-Mongoose.connect('mongodb://localhost/wikidb');
+Mongoose.Promise = global.Promise;
+Mongoose.connect(Config.mongoose.connectionString);
 var db = Mongoose.connection;
 
 db.on('error', err => {

@@ -5,7 +5,9 @@ const Winston = require('winston');
 const Config = require('src/config.js');
 
 var logger = new Winston.Logger({
-    level: 'info',
+    levels: Config.winston.levels,
+  	colors: Config.winston.colors,
+  	level: 'info',
     transports: [
 	    new (Winston.transports.Console)({
 	    	name: 'debug-console',

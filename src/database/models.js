@@ -3,6 +3,8 @@
 const Fs = require('fs');
 const Path = require('path');
 
+const Log = require('src/logger.js');
+
 const MODELS_PATH = 'src/database/models';
 
 var Models = {};
@@ -19,22 +21,28 @@ function addCustomModel(modelOptions) {
 	Models[modelOptions.name] = new CustomModel(modelOptions);
 }
 
+function DocumentToObject(doc) {
+	doc = doc.toObject();
+	doc._id = doc._id.toString();
+	return doc;
+}
+
 function CustomModel(modelOptions) {
 	var self = this;
 	var _name = modelOptions.name;
 	var _model = modelOptions.model;
 
-	self.save = function(object) {
+	self.create = function(object) {
 		return new Promise((fulfill, reject) => {
 			let doc = new _model(object);
 
-			doc.save((err, result) => { 
+			doc.save((err, response) => { 
                 if(err) return reject("Error while saving a " + _name);
 
-                result = result.toObject();
-                result._id = result._id.toString();
+                response = DocumentToObject(response);
 
-                fulfill(result);
+                Log.data("[" + _name + "] Create :", response);
+                fulfill(response);
             });
 		});
 	};
@@ -45,15 +53,28 @@ function CustomModel(modelOptions) {
 
 			if(selector) query.select(selector);
 
-			query.exec((err, result) => {
+			query.exec((err, response) => {
 				if(err) return reject("Error while searching a " + _name);
-				if(!result) return fulfill();
+				if(!response) return fulfill();
 
-			  	result = result.toObject();
-                result._id = result._id.toString();
+			  	response = DocumentToObject(response);
 
-                fulfill(result);
+                Log.data("[" + _name + "] FindOne :", response);
+                fulfill(response);
 			})
+		});
+	};
+
+	self.remove = function(selector) {
+		return new Promise((fulfill, reject) => {
+			_model.remove(selector, (err, response) => {
+				if(err) return reject("Error while removing a " + _name);
+
+				response = response.result;
+
+				Log.data("[" + _name + "] Remove :", response);
+				fulfill(response);
+			});
 		});
 	};
 }
