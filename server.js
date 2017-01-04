@@ -18,29 +18,42 @@ server.connection({
 
 server.state( 'session', {
     isSecure: process.env.WIKI_DEV_ENV ? false : true,
-	ttl: null,
+    ttl: null,
     encoding: 'base64json'
 });
 
-server.ext({
-    type: 'onPreAuth',
-    method: require('src/session/getSession')
-});
-
-server.route({
-    path: '/',
-    method: 'GET',
-    handler: ( req, reply ) => {
-        reply('Hello !');
+server.register({
+    register: require('src/auth/authStrategy'),
+    options: {
+        message: 'hello'
     }
-});
+}, (err) => {
+
+    if(err) return Log.error("Registration error :", err);
+
+    for(let i in Config.roles) {
+        let role = Config.roles[i];
+        server.auth.strategy(role.name, 'checkRole', { requiredRoleLevel: role.level });
+    }
+
+    server.route({
+        path: '/',
+        method: 'GET',
+        config: {
+            auth: Config.roles.member.name
+        },
+        handler: ( req, reply ) => {
+            reply('Hello !');
+        }
+    });
 
 
-server = Routes(server);
+    server = Routes(server);
 
-server.start(err => {
-    if (err)
-    	throw err;
+    server.start(err => {
+        if (err)
+            throw err;
 
-    Log.info('Server listening on port 8000');
+        Log.info('Server listening on port 8000');
+    });
 });

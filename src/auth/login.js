@@ -30,7 +30,7 @@ module.exports = function(username, password) {
 
 				    	fulfill({
 				    		username: username,
-				    		role: user.role ? user.role : Config.roles.guest
+				    		role: user.role ? user.role : Config.roles.guest.name
 				    	});
 				    }
 				    else {
