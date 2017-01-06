@@ -72,6 +72,23 @@ function CustomModel(modelOptions) {
 		});
 	};
 
+	self.update = function(query, update) {
+		return new Promise((fulfill, reject) => {
+			_model.update(query, update)
+				.then(response => {
+					if(!response) return fulfill();
+
+				  	response = DocumentToObject(response);
+					
+					Log.data("[" + _name + "] Update :", response);
+	                fulfill(response);
+				})
+				.catch(err => {
+					reject("Error while updating a " + _name);
+				});
+		});
+	};
+
 	self.remove = function(selector) {
 		return new Promise((fulfill, reject) => {
 			_model.remove(selector)
