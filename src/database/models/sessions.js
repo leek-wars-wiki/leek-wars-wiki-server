@@ -6,7 +6,9 @@ var sessionsSchema = Mongoose.Schema({
     username: String,
     role: String,
     isAuth: Boolean,
-    keep: Boolean
+    keep: Boolean,
+    updatedAt: Date,
+    createdAt: Date
 });
 
 module.exports = {

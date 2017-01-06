@@ -24,6 +24,7 @@ function addCustomModel(modelOptions) {
 function DocumentToObject(doc) {
 	doc = doc.toObject();
 	doc._id = doc._id.toString();
+
 	return doc;
 }
 
@@ -34,6 +35,8 @@ function CustomModel(modelOptions) {
 
 	self.create = function(object) {
 		return new Promise((fulfill, reject) => {
+			object.updatedAt = new Date();
+			object.createdAt = new Date();
 			let doc = new _model(object);
 
 			doc.save((err, response) => { 

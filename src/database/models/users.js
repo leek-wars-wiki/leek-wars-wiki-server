@@ -8,6 +8,8 @@ var usersSchema = Mongoose.Schema({
     password: String,
     role: String,
     status: String,
+    updatedAt: Date,
+    createdAt: Date
 });
 
 module.exports = {
