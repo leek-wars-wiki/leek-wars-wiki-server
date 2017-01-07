@@ -9,13 +9,13 @@ const BasicAuth = require('src/auth/basicAuth.js');
 const Sessions = require('src/database/models.js').Sessions;
 
 
-exports.register = function (plugin, options, next) {
-	plugin.auth.scheme('checkRole', roleScheme);
+module.exports.register = function (server, options, next) {
+	server.auth.scheme('checkRole', roleScheme);
 
 	next();
 };
 
-exports.register.attributes = {
+module.exports.register.attributes = {
 	name: 'roleAuthStrategy',
 	version: '1.0.0'
 };

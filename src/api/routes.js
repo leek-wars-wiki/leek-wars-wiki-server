@@ -7,7 +7,7 @@ const Log = require('../logger.js');
 
 const API_PATH = './src/api';
 
-module.exports = function(server) {
+module.exports.register = function (server, options, next) {
 	Fs.readdirSync(API_PATH)
 	.filter(file => {
 		return Fs.statSync(Path.join(API_PATH, file)).isDirectory();
@@ -27,5 +27,23 @@ module.exports = function(server) {
 	});
 
 	Log.info('Routes creation : Completed');
-	return server;
+
+	// Temporary
+	server.route({
+        path: '/',
+        method: 'GET',
+        config: {
+            auth: require('src/config.js').roles.member.name
+        },
+        handler: ( req, reply ) => {
+            reply('Hello !');
+        }
+    });
+
+	next();
+};
+
+module.exports.register.attributes = {
+	name: 'setupRoutes',
+	version: '1.0.0'
 };

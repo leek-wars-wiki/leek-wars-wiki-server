@@ -4,7 +4,6 @@ const Hapi = require('hapi');
 
 const Log = require('src/logger.js');
 const Config = require('src/config.js');
-const Routes = require('src/api/routes.js');
 
 // Setup DB
 require('./src/database/setup.js');
@@ -27,7 +26,7 @@ server.register({
     options: {
         message: 'hello'
     }
-}, (err) => {
+}, err => {
 
     if(err) return Log.error("Registration error :", err);
 
@@ -36,24 +35,14 @@ server.register({
         server.auth.strategy(role.name, 'checkRole', { requiredRoleLevel: role.level });
     }
 
-    server.route({
-        path: '/',
-        method: 'GET',
-        config: {
-            auth: Config.roles.member.name
-        },
-        handler: ( req, reply ) => {
-            reply('Hello !');
-        }
-    });
+    server.register({
+        register: require('src/api/routes'),
+    }, err => {
+        server.start(err => {
+            if (err)
+                throw err;
 
-
-    server = Routes(server);
-
-    server.start(err => {
-        if (err)
-            throw err;
-
-        Log.info('Server listening on port 8000');
-    });
+            Log.info('Server listening on port 8000');
+        });
+    })
 });
