@@ -33,8 +33,8 @@ module.exports = function(authorization) {
         }
 
         Login(username, password)
-            .then(session => {
-                fulfill(session);
+            .then(user => {
+                fulfill(user);
             })
             .catch(err => {
                 reject(err);

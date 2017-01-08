@@ -33,10 +33,10 @@ module.exports.register = function (server, options, next) {
         path: '/',
         method: 'GET',
         config: {
-            auth: require('src/config.js').roles.member.name
+            auth: require('src/config.js').roles.guest.name
         },
-        handler: ( req, reply ) => {
-            reply('Hello !');
+        handler: (request, reply) => {
+            reply(request.auth.credentials).code(200);
         }
     });
 
