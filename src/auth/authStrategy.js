@@ -41,6 +41,7 @@ function roleScheme(server, options) {
 								.then(session => {
 									checkRole(session.role, options.requiredRoleLevel)
 										.then(() => {
+											
 											reply.continue({ credentials: session });
 										})
 										.catch(err => { reply(err); });

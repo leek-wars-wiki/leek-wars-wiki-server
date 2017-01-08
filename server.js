@@ -5,6 +5,9 @@ const Hapi = require('hapi');
 const Log = require('src/logger.js');
 const Config = require('src/config.js');
 
+const AuthStrategy = require('src/auth/authStrategy');
+const Routes = require('src/api/routes');
+
 // Setup DB
 require('./src/database/setup.js');
 
@@ -22,10 +25,7 @@ server.state( 'session', {
 });
 
 server.register({
-    register: require('src/auth/authStrategy'),
-    options: {
-        message: 'hello'
-    }
+    register: AuthStrategy
 }, err => {
 
     if(err) return Log.error("Registration error :", err);
@@ -36,7 +36,7 @@ server.register({
     }
 
     server.register({
-        register: require('src/api/routes'),
+        register: Routes
     }, err => {
         server.start(err => {
             if (err)
