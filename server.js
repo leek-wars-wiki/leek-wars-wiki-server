@@ -1,11 +1,13 @@
 "use strict";
 
 const Hapi = require('hapi');
+const Vision = require('vision');
 
 const Log = require('src/logger.js');
 const Config = require('src/config.js');
 
 const AuthStrategy = require('src/auth/authStrategy');
+const Views = require('src/views/views');
 const Routes = require('src/api/routes');
 
 // Setup DB
@@ -24,25 +26,31 @@ server.state( 'session', {
     encoding: 'base64json'
 });
 
-server.register({
-    register: AuthStrategy
-}, err => {
-
-    if(err) return Log.error("Registration error :", err);
-
+server.register([
+    {
+        register: Vision
+    },
+    {
+        register: AuthStrategy
+    }
+], err => {
     for(let i in Config.roles) {
         let role = Config.roles[i];
         server.auth.strategy(role.name, 'checkRole', { requiredRoleLevel: role.level });
     }
 
-    server.register({
-        register: Routes
-    }, err => {
+    server.register([
+        {
+            register: Views
+        },
+        {
+            register: Routes
+        }
+    ], err => {
         server.start(err => {
-            if (err)
-                throw err;
+            if (err) Log.error("Server didn't start:", err);
 
             Log.info('Server listening on port 8000');
         });
-    })
+    });
 });
