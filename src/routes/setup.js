@@ -5,24 +5,24 @@ const Path = require('path');
 
 const Log = require('../logger.js');
 
-const API_PATH = './src/api';
+const ROUTES_PATH = './src/routes';
 
 module.exports.register = function (server, options, next) {
-	Fs.readdirSync(API_PATH)
+	Fs.readdirSync(ROUTES_PATH)
 	.filter(file => {
-		return Fs.statSync(Path.join(API_PATH, file)).isDirectory();
+		return Fs.statSync(Path.join(ROUTES_PATH, file)).isDirectory();
 	})
 	.forEach(dir => {
-		Fs.readdirSync(Path.join(API_PATH, dir))
+		Fs.readdirSync(Path.join(ROUTES_PATH, dir))
 			.filter(file => {
 				return Path.extname(file) === '.js';
 			})
-			.forEach(apiFile => {
-				let api = require('./' + Path.join(dir, apiFile));
+			.forEach(routeFile => {
+				let route = require('./' + Path.join(dir, routeFile));
 
-				Log.verbose('New route : [' + api.method + '] ' + api.path);
+				Log.verbose('New route : [' + route.method + '] ' + route.path);
 
-				server.route(api);
+				server.route(route);
 			});
 	});
 

@@ -8,7 +8,7 @@ const Config = require('src/config.js');
 
 const AuthStrategy = require('src/auth/authStrategy');
 const Views = require('src/views/views');
-const Routes = require('src/api/routes');
+const Routes = require('src/routes/setup');
 
 // Setup DB
 require('./src/database/setup.js');
