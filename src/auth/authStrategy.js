@@ -12,6 +12,8 @@ const BasicAuth = require('src/auth/basicAuth');
 module.exports.register = function (server, options, next) {
 	server.auth.scheme('checkRole', roleScheme);
 
+	Log.debug("AuthStrategy loaded");
+
 	next();
 };
 

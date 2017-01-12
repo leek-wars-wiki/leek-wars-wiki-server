@@ -7,8 +7,7 @@ const Log = require('src/logger.js');
 const Config = require('src/config.js');
 
 const AuthStrategy = require('src/auth/authStrategy');
-const Views = require('src/views/views');
-const Routes = require('src/routes/setup');
+const Setup = require('src/setup');
 
 // Setup DB
 require('./src/database/setup.js');
@@ -21,36 +20,36 @@ server.connection({
 });
 
 server.state( 'session', {
-    isSecure: process.env.WIKI_DEV_ENV ? false : true,
-    ttl: null,
-    encoding: 'base64json'
+	isSecure: process.env.WIKI_DEV_ENV ? false : true,
+	ttl: null,
+	encoding: 'base64json'
 });
 
 server.register([
-    {
-        register: Vision
-    },
-    {
-        register: AuthStrategy
-    }
+	{
+		register: Vision
+	},
+	{
+		register: AuthStrategy
+	}
 ], err => {
-    for(let i in Config.roles) {
-        let role = Config.roles[i];
-        server.auth.strategy(role.name, 'checkRole', { requiredRoleLevel: role.level });
-    }
+	if (err) return Log.error("Server can't load Vision or AuthStrategy:", err);
 
-    server.register([
-        {
-            register: Views
-        },
-        {
-            register: Routes
-        }
-    ], err => {
-        server.start(err => {
-            if (err) Log.error("Server didn't start:", err);
+	for(let i in Config.roles) {
+		let role = Config.roles[i];
+		server.auth.strategy(role.name, 'checkRole', { requiredRoleLevel: role.level });
+	}
 
-            Log.info('Server listening on port 8000');
-        });
-    });
+	server.register({
+		register: Setup
+
+	}, err => {
+		if (err) return Log.error("Server can't setup views and routes:", err);
+
+		server.start(err => {
+			if (err) return Log.error("Server didn't start:", err);
+
+			Log.info('Server listening on port 8000');
+		});
+	})
 });
