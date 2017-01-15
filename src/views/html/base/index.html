@@ -4,8 +4,15 @@
         <title>Index</title>
     </head>
     <body>
-        <div>
-            <h1>{{message}}</h1>
+    	<h1>Index</h1>
+        <div id='logged'>
+        	{{#if logged}}
+			    <p>Hello {{username}}</p>
+			    <a href="">Logout</a>
+			{{else}}
+			    <p>Hello guest</p>
+			    <a href="">Login</a>
+			{{/if}}
         </div>
     </body>
 </html>

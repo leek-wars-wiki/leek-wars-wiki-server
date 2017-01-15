@@ -20,4 +20,3 @@ module.exports = {
         tags: ['index']
 	}
 };
-
