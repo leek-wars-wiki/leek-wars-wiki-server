@@ -24,7 +24,7 @@ module.exports = function(username, password) {
 				Bcrypt.compare(password, user.password, (err, isValid) => {
 				    if(err) reject(Boom.internal("Error while checking user's password"));
 
-				    // Valid password - Return a new session
+				    // Valid password
 				    if(isValid) {
 				    	Log.verbose("Connection from user : " + username);
 

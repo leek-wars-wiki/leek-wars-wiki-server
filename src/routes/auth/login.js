@@ -21,23 +21,18 @@ var loginPayloadSchema = {
 };
 
 function loginHandler(request, reply) {
+	let loginFields = request.payload;
 	Log.debug(request.payload);
-	// let loginFields = request.payload;
-	// Log.debug(request.payload);
 
-	// Login(loginFields.username, loginFields.password)
- //        .then(user => {
- //            SessionsHandler.newSession(user.name, user.role, loginFields.keep)
- //            	.then(session => { 
- //            		reply(session).state('session', session._id);
- //            	})
- //            	.catch(err => {
- //            		reply(err);
- //        		});
- //        })
- //        .catch(err => {
- //            reply(err);
- //        });
+	Login(loginFields.username, loginFields.password)
+        .then(user => {
+            SessionsHandler.newSession(user.name, user.role, loginFields.keep)
+            	.then(session => { 
+            		reply(session).state('session', session._id);
+            	})
+            	.catch(reply);
+        })
+        .catch(reply);
 }
 
 module.exports = {

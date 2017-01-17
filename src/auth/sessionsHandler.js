@@ -18,7 +18,7 @@ SessionsHandler.newSession = function(username, role, keep) {
 						username: username,
 						role: role,
 						isAuth: true,
-						keep: false
+						keep: keep
 					})
 					.then(session => {
 						fulfill(session);
