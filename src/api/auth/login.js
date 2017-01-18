@@ -41,7 +41,7 @@ module.exports = {
 	handler: loginHandler,
 	config: {
 		description: 'Login',
-        tags: ['api', 'auth'],
+        tags: ['api', 'auth', 'login'],
         validate: {
             payload: loginPayloadSchema
         }
