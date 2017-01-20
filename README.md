@@ -1,6 +1,6 @@
 # Leek Wars Wiki
 
-[![Dependency Status](https://www.versioneye.com/user/projects/5880d099452b83003d3c90fe/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5880d099452b83003d3c90fe)
+[![Dependency Status](https://gemnasium.com/badges/github.com/leek-wars-wiki/leek-wars-wiki-server.svg)](https://gemnasium.com/github.com/leek-wars-wiki/leek-wars-wiki-server)
 
 NodeJS based wiki for Leek Wars
 
