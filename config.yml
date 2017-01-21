@@ -6,6 +6,14 @@ logsLevel:
 mongoose:
   connectionString: 'mongodb://localhost/wikidb'
 
+# Mailer
+# Environnement variables name for user and pass
+mailer:
+  from: 'Leek Wars Wiki <support@leekwarswiki.net>'
+  service: 'Mailgun'
+  user: 'MAILGUN_USER'
+  pass: 'MAILGUN_PASS'
+
 # Roles
 roles:
   guest:
