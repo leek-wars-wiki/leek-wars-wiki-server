@@ -13,6 +13,7 @@ mailer:
   service: 'Mailgun'
   user: 'MAILGUN_USER'
   pass: 'MAILGUN_PASS'
+  templates: 'src/views/mails'
 
 # Roles
 roles:
