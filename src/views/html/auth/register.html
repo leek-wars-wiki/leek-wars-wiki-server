@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
         <title>Register</title>
+        <link rel="stylesheet" type="text/css" href="ressources/style/auth/register.css">
     </head>
     <body>
         <h1>Login</h1>
-        <form enctype='application/json' action="/login" method="post">
+        <form id="register-from" enctype="application/json" action="/register" method="post">
             Email:<br>
-            <input type="email" name="email">
+            <input id="email-input" type="email" name="email">
             <br>
             Username:<br>
-            <input type="text" name="username">
+            <input id="username-input" type="text" name="username">
             <br>
             Password:<br>
-            <input type="password" name="password">
+            <input id="password-input" type="password" name="password">
             <br>
             Confirm password:<br>
-            <input type="password" name="confirmPassword">
+            <input id="confirm-password-input" type="password" name="confirmPassword">
             <br><br>
-            <input type="submit" value="Submit">
+            <input id="submit-button" type="submit" value="Submit" disabled >
         </form>
+
+        <script type="text/javascript" src="ressources/script/auth/register.js"></script>
     </body>
 </html>

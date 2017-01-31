@@ -2,6 +2,7 @@
 
 const Hapi = require('hapi');
 const Vision = require('vision');
+const Inert = require('inert');
 
 const Log = require('src/logger.js');
 const Config = require('src/config.js');
@@ -28,6 +29,9 @@ server.state( 'session', {
 server.register([
 	{
 		register: Vision
+	},
+	{
+		register: Inert
 	},
 	{
 		register: AuthStrategy
