@@ -21,18 +21,6 @@ module.exports.register = function (server, options, next) {
         isCached: false
     });
 
-    server.route({
-	    path: "/ressources/{path*}",
-	    method: "GET",
-	    handler: {
-	        directory: {
-	            path: "./src/views",
-	            listing: false,
-	            index: false
-	        }
-	    }
-	});
-
     loadRouteFolder(server, {
 		path: API_PATH,
 		requirePath: API_REQUIRE_PATH,

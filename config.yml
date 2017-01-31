@@ -55,3 +55,7 @@ winston:
     data: 'magenta'
     silly: 'grey'
 
+# Paths
+paths:
+  script: './src/views/script'
+  style: './src/views/style'
